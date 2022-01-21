@@ -1,0 +1,26 @@
+{
+    "version": "00000001",  //8 bit
+    "inputs": [
+        {
+            //utxo
+            "val": "", //float 32 bit
+            "lock": "", //256 bit hash
+            //unlock utxo
+            "sig": "", //256 bit hash
+            "txid": "", //160 bit tx == tx -> sha256 -> hash160 - 1 byte + 1 byte(const)
+        },
+        {
+            ...
+        }
+    ],
+    "outputs": [
+        {
+            "address": "", //160 bit  address == privKey -> sha256 -> hash160 - 1 byte + 1 byte(const)
+            "val": "", //float 32 bit
+            "lock": "" //256 bit hash
+        },
+        {
+            ...
+        }
+    ]
+}

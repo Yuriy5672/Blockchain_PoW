@@ -1,0 +1,10 @@
+{
+    "version": "00000001",
+
+    "ip": "127.0.0.1",
+    "port": "2000",
+    
+    "type": "fullnode",
+
+    "maxlisteners": "20"
+}

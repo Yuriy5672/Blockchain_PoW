@@ -1,0 +1,12 @@
+{
+    "version": "string",
+    "prevBlockHash": "string",
+    "merkleRoot": "string",
+    "timestamp": "string",
+    "target": "string",
+    "nonce": "string",
+    "blockHash": "string",
+    "tx": [
+        
+    ]
+}

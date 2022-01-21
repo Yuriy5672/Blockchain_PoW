@@ -1,0 +1,18 @@
+{
+    "version": "", //8 bit
+    "prevBlockHash": "", //256 bit hash
+    "merkleRoot": "", //256 merkle root
+    "timestamp": "", //Unixtime
+    "target": "", //3 bytes
+    "nonce": "", //int 4 bytes
+    "blockHash": "", //256 bit hash
+
+    "tx": [ //transactions
+        {
+            tx...
+        },
+        {
+            tx...
+        }
+    ]
+}

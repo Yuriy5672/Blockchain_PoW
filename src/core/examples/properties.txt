@@ -1,0 +1,9 @@
+#Network
+version: 00000001 #current version
+
+#Server
+ip: 127.0.0.1 #node ip
+port: 2000 #network port
+
+#Node
+type: fullnode

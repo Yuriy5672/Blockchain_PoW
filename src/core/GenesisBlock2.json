@@ -1,0 +1,12 @@
+{
+    "version": "00000001",
+    "prevBlockHash": "00000000000000000000000000000000",
+    "merkleRoot": "K4IFJVHS73FD4CMVJ495LLF4DBXFZKKD",
+    "timestamp": "19.01.2022",
+    "target": "1GHTY4",
+    "nonce": "1",
+    "blockHash": "66HFJVHS73FD4CMVJ678JUF4DBXFZKKD",
+    "tx": [
+        
+    ]
+}
