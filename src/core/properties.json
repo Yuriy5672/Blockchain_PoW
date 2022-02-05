@@ -6,5 +6,7 @@
     
     "type": "fullnode",
 
-    "maxlisteners": "20"
+    "maxlisteners": "20",
+
+    "difficulty": "2"
 }

@@ -2,6 +2,7 @@ import json
 import datetime
 import time
 
+from block import hash_sha3
 from blockchain import blockchain
 from asyncio.windows_events import NULL
 
@@ -31,8 +32,8 @@ def validation(block_json):
         if int(block_values['version'], 2) != node_version:
             print('Outdated version block!')
             return False
-    except Exception:
-        print('Error in the "version" field!')
+    except Exception as e:
+        print('Version check. ' + e)
         return False
 
     #prevBlockHash
@@ -40,8 +41,8 @@ def validation(block_json):
         if block_values['prevBlockHash'] != blockchain.get_lastblock()['blockHash']:
             print('prevBlockHash does not match the hash of the previous block!')
             return False
-    except Exception:
-        print('An error occurred when comparing block hashes!')
+    except Exception as e:
+        print('Previous block hash check. ' + e)
         return False
 
     #timestamp
@@ -52,37 +53,54 @@ def validation(block_json):
         if block_timestamp >= current_timestamp: #or block_time > current_time - datetime.timedelta(minutes = 20)
             print('Timestamp is specified incorrectly!')
             return False
-    except Exception:
-        print('Error checking timestamp! The format may be incorrect.')
+    except Exception as e:
+        print('Timestamp check. ' + e)
         return False
 
     #get tx
     try:
         tx_arr = block_values['tx']
-    except Exception:
-        print('Transaction receipt error!')
+    except Exception as e:
+        print(e)
         return False
-
-    #merkleRoot
-    
 
     #Proof of Work check
     try:
-        print()
-    except Exception:
-        print()
-        
-        #target 
-        #nonce
-        #equal local & block hash
-        #blockHash
+        #difficulty
+        #get current difficulty
+        if bytes(block_values['difficulty']) < json.load(open('src/core/properties.json'))['difficulty']:
+            print('Field "difficulty" of the block is less than the installed one!')
+            return False
 
-    #return "True"
+        #nonce
+        if type(block_values['nonce']) != int:
+            print('"nonce" field type is not equal to int')
+            return False
+
+        #equal local & block hash
+        #blockHash == double hashing sha3 (str( tx list + version + prevBlockHash + timestamp + difficulty + nonce))
+        blockHash = hash_sha3(str(block_values['tx']) + str(block_values['version']) + str(block_values['prevBlockHash'])  
+        + str(block_values['timestamp']) + str(block_values['difficulty']) + str(block_values['nonce']))
+
+        if str(blockHash) != str(block_values['blockHash']):
+            print('Invalid block hash!')
+            return False
+
+    except Exception as e:
+        print('PoW check. ' + e)
+        return False
 
     #tx
+    try:
+        print()
         #...
+    except Exception as e:
+        print('Transactions check. ' + e)
+        return False
 
-    print('validation passed successfully ' + block_json['blockHash'])
+    print('validation passed successfully ' + block_values['blockHash'])
+
+    #if all OK return "True"
     return True
 
 validation(json.load(open('src/core/GenesisBlock2.json')))

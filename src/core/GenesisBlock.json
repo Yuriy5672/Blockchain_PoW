@@ -1,9 +1,8 @@
 {
     "version": "00000001",
     "prevBlockHash": "00000000000000000000000000000000",
-    "merkleRoot": "K4IFJVHS73FD4CMVJ495LLF4DBXFZKKD",
     "timestamp": "1642635432.6041572",
-    "target": "1GHTY4",
+    "difficulty": "2",
     "nonce": "1",
     "blockHash": "66HFJVHS73FD4CMVJ678JUF4DBXFZKKD",
     "tx": [

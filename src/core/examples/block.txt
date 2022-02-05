@@ -1,9 +1,8 @@
 {
     "version": "", //8 bit
     "prevBlockHash": "", //256 bit hash
-    "merkleRoot": "", //256 merkle root
     "timestamp": "", //Unixtime
-    "target": "", //3 bytes
+    "difficulty": "", //32 bytes // the number of zeros at the beginning
     "nonce": "", //int 4 bytes
     "blockHash": "", //256 bit hash
 

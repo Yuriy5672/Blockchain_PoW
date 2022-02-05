@@ -14,8 +14,13 @@ def create_block():
 def findBlockHash(block_json):
     print()
 
+#double hashing sha3
 def hash_sha3(data):
-    return hashlib.sha3_256(data).hexdigest()
+    data = hashlib.sha3_256(data).hexdigest()
+    print('hash_sha3 iteration 1 : ' + data)
+    data = hashlib.sha3_256(data).hexdigest()
+    print('hash_sha3 iteration 2 : ' + data)
+    return data
 
 
 create_block()
