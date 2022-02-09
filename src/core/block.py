@@ -18,7 +18,7 @@ def findBlockHash(block_json):
 def hash_sha3(data):
     data = hashlib.sha3_256(data).hexdigest()
     print('hash_sha3 iteration 1 : ' + data)
-    data = hashlib.sha3_256(data).hexdigest()
+    data = hashlib.sha3_256(b'{data}').hexdigest()
     print('hash_sha3 iteration 2 : ' + data)
     return data
 
