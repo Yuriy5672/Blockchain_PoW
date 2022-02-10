@@ -10,6 +10,7 @@ from asyncio.windows_events import NULL
 block_scheme = json.load(open('src/core/block_structure.json'))
 tx_scheme = json.load(open('src/core/tx_structure.json'))
 node_version = json.load(open('src/core/properties.json'))['version']
+total_coins = 105000000 #21 bil * 5
 
 def validation(block_json):
     try:
@@ -99,6 +100,8 @@ def validation(block_json):
         i = 0
         bLen = len(block_json['tx'])
         while i < bLen:
+            #!!!!!! Implement fields value size checking !!!!!!
+            #!!!!!! Implement UTXO verification using UTXO pool !!!!!!
             #check tx fields
             if block_json['tx'][i].keys() != block_scheme['tx'][i].keys(): #block_json['tx'][0].values() == '' or _block_v[i] == NULL
                 print('The structure of the "tx" field is broken! The keys do not match the schema.')
@@ -116,10 +119,35 @@ def validation(block_json):
             if block_json['tx'][i]['inputs'].keys() != block_scheme['tx'][i]['inputs'].keys():
                 print('The tx inputs structure is broken. The fields do not match the scheme!')
                 return False
-
             
+            #check inputs value
+            #check: convert val to float
+            tx_val = float(block_json['tx'][i]['inputs']['val'])
+            if tx_val < 0:
+                print('The tx inputs structure is broken. tx cannot have a negative "val".')
+                return False
+
+            #check: val < total_coins
+            if tx_val > total_coins:
+                print('The tx inputs structure is broken. tx cannot spend more than "total_coins".')
+                return False
+
+            #check: lock & signature
+
+
+            #check: txid != null
+            if block_json['tx'][i]['inputs']['txid'] == '' or block_json['tx'][i]['inputs']['txid'] == NULL:
+                print('The tx inputs structure is broken. The transaction "txid" field must be filled in.')
+                return False
 
             #outputs
+            #check outputs fields
+
+            #check outputs value
+            
+            #check: address != null
+
+
 
             i += 1
         print()
