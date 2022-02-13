@@ -1,9 +1,11 @@
+import imp
 import json
 import datetime
 import time
 
 from block import hash_sha3
 from blockchain import blockchain
+from signature import verifySignature
 from asyncio.windows_events import NULL
 
 
@@ -133,7 +135,10 @@ def validation(block_json):
                 return False
 
             #check: lock & signature
-
+            if block_json['tx'][i]['inputs']['lock'] or block_json['tx'][i]['inputs']['sig'] != NULL:
+                lock = block_json['tx'][i]['inputs']['lock']
+                sig = block_json['tx'][i]['inputs']['sig']
+                if verifySignature()
 
             #check: txid != null
             if block_json['tx'][i]['inputs']['txid'] == '' or block_json['tx'][i]['inputs']['txid'] == NULL:
