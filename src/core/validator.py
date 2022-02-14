@@ -1,3 +1,4 @@
+from email import message
 import imp
 import json
 import datetime
@@ -5,7 +6,7 @@ import time
 
 from block import hash_sha3
 from blockchain import blockchain
-from signature import verifySignature
+from signature import verifySignature, getSHA3
 from asyncio.windows_events import NULL
 
 
@@ -124,41 +125,58 @@ def validation(block_json):
                 print('The tx inputs structure is broken. The fields do not match the scheme!')
                 return False
             
-            #check inputs value
-            #check: convert val to float
-            tx_val = float(block_json['tx'][i]['inputs']['val'])
-            if tx_val < 0:
-                print('The tx inputs structure is broken. tx cannot have a negative "val".')
-                return False
-
-            #check: val < total_coins
-            if tx_val > total_coins:
-                print('The tx inputs structure is broken. tx cannot spend more than "total_coins".')
-                return False
-
-            #check: lock & signature
-            if block_json['tx'][i]['inputs']['sig'] != NULL:
-                lock = block_json['tx'][i]['inputs']['lock']
-                sig = block_json['tx'][i]['inputs']['sig']
-                if verifySignature()
-            else:
-                print()
-                return False
-
-            #check: txid != null || is genesis block
-            if block_json['tx'][i]['inputs']['txid'] == NULL:
-                if block_json['blockHash'] != GENESIS_BLOCK_HASH:
-                    print('The tx inputs structure is broken. The transaction "txid" field must be filled in.')
+            #check inputs
+            for y in range(len(block_json['tx'][i]['inputs'])):
+                #check: convert val to float
+                tx_val = float(block_json['tx'][i]['inputs'][y]['val'])
+                if tx_val < 0:
+                    print('The tx inputs structure is broken. tx cannot have a negative "val".')
                     return False
+
+                #check: val < total_coins
+                if tx_val > total_coins:
+                    print('The tx inputs structure is broken. tx cannot spend more than "total_coins".')
+                    return False
+
+                #check: txid != null || is genesis block
+                if block_json['tx'][i]['inputs'][y]['txid'] == NULL:
+                    if block_json['blockHash'] != GENESIS_BLOCK_HASH:
+                        print('The tx inputs structure is broken. The transaction "txid" field must be filled in.')
+                        return False
+
+
+                #check: lock & signature
+                if block_json['tx'][i]['inputs'][y]['sig'] == NULL:
+                    print('Tx №' + i + ' utxo №' + ' Empty signature field!')
+                    return False
+                else:
+                    lock = block_json['tx'][i]['inputs'][y]['lock']
+                    sig = block_json['tx'][i]['inputs'][y]['sig'].split('/')
+                    message = str(block_json['tx'][i]['inputs'][y]['val']) + str(block_json['tx'][i]['inputs'][y]['lock']) + str(block_json['tx'][i]['inputs'][y]['txid'])
+                    
+                    #check publick key hash
+                    if lock != getSHA3(sig[1]):
+                        #!!!!!! Implement  utxo № y !!!!!!
+                        print('Tx №' + i + ' utxo №' + ' The hash of the public key does not match!')
+                        return False
+                    
+                    #Verification signature
+                    if verifySignature(message, sig[0], sig[1]) == False:
+                        print('Tx №' + i + ' utxo №' + ' Invalid signature!')
+                        return False
+                y += 1
 
             #outputs
             #check outputs fields
+            if block_json['tx'][i]['outputs'].keys() != block_scheme['tx'][i]['outputs'].keys():
+                print('The tx outputs structure is broken. The fields do not match the scheme!')
+                return False
 
-            #check outputs value
-            
-            #check: address != null
+            #check outputs
+            for y in range(len(block_json['tx'][i]['outputs'])):
+                
 
-
+                y += 1
 
             i += 1
         print()
