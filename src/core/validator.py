@@ -14,6 +14,8 @@ tx_scheme = json.load(open('src/core/tx_structure.json'))
 node_version = json.load(open('src/core/properties.json'))['version']
 total_coins = 105000000 #21 bil * 5
 
+GENESIS_BLOCK_HASH = '66HFJVHS73FD4CMVJ678JUF4DBXFZKKD'
+
 def validation(block_json):
     try:
         #get keys & values
@@ -135,15 +137,19 @@ def validation(block_json):
                 return False
 
             #check: lock & signature
-            if block_json['tx'][i]['inputs']['lock'] or block_json['tx'][i]['inputs']['sig'] != NULL:
+            if block_json['tx'][i]['inputs']['sig'] != NULL:
                 lock = block_json['tx'][i]['inputs']['lock']
                 sig = block_json['tx'][i]['inputs']['sig']
                 if verifySignature()
-
-            #check: txid != null
-            if block_json['tx'][i]['inputs']['txid'] == '' or block_json['tx'][i]['inputs']['txid'] == NULL:
-                print('The tx inputs structure is broken. The transaction "txid" field must be filled in.')
+            else:
+                print()
                 return False
+
+            #check: txid != null || is genesis block
+            if block_json['tx'][i]['inputs']['txid'] == NULL:
+                if block_json['blockHash'] != GENESIS_BLOCK_HASH:
+                    print('The tx inputs structure is broken. The transaction "txid" field must be filled in.')
+                    return False
 
             #outputs
             #check outputs fields
