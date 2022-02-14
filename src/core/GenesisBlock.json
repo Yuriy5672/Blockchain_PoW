@@ -10,10 +10,10 @@
             "version": "00000001",
             "inputs": [
                 {
-                    "val": "",
-                    "lock": "",
-                    "sig": "",
-                    "txid": ""
+                    "val": "1",
+                    "lock": "77b2cd8f23d0eb962f20f19d2e21261af0a9c54973556d2f366517e97dab9a25",
+                    "sig": "sig + pubKey",
+                    "txid": "0"
                 },
                 {
                     "val": "",
