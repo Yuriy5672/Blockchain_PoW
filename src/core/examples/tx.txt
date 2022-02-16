@@ -7,7 +7,7 @@
             "lock": "", //256 bit hash
             //unlock utxo
             "sig": "", //256 bit hash
-            "txid": "", //160 bit tx == tx -> hash160 - 1 byte + 1 byte(const)
+            "txid": "", //176 bit tx == tx -> sha3_256 - 35 byte + 2 (const) //22 symbols
         },
         {
             ...
@@ -15,7 +15,7 @@
     ],
     "outputs": [
         {
-            "address": "", //160 bit  address == pubKey -> hash160 - 1 byte + 1 byte(const)
+            "address": "", //168 bit  address == pubKey -> sha3_256 - 13 byte + 1 (const)
             "val": "", //float 32 bit
             "lock": "" //256 bit hash
         },

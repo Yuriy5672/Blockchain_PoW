@@ -13,9 +13,11 @@ from asyncio.windows_events import NULL
 block_scheme = json.load(open('src/core/block_structure.json'))
 tx_scheme = json.load(open('src/core/tx_structure.json'))
 node_version = json.load(open('src/core/properties.json'))['version']
-total_coins = 105000000 #21 bil * 5
 
 GENESIS_BLOCK_HASH = '66HFJVHS73FD4CMVJ678JUF4DBXFZKKD'
+ADDRESS_LENGTH = 21
+ADDRESS_FIRST_SYMBOL = '0'
+TOTAL_COINS = 105000000 #21 bil * 5
 
 def validation(block_json):
     try:
@@ -156,13 +158,12 @@ def validation(block_json):
                     
                     #check publick key hash
                     if lock != getSHA3(sig[1]):
-                        #!!!!!! Implement  utxo № y !!!!!!
-                        print('Tx №' + i + ' utxo №' + ' The hash of the public key does not match!')
+                        print('Tx №' + i + ' utxo №' + y + ' The hash of the public key does not match!')
                         return False
                     
                     #Verification signature
                     if verifySignature(message, sig[0], sig[1]) == False:
-                        print('Tx №' + i + ' utxo №' + ' Invalid signature!')
+                        print('Tx №' + i + ' utxo №' + y + ' Invalid signature!')
                         return False
                 y += 1
 
@@ -174,6 +175,18 @@ def validation(block_json):
 
             #check outputs
             for y in range(len(block_json['tx'][i]['outputs'])):
+
+                #address symbol & length check
+                if(str(block_json['tx'][i]['outputs'][y]['address'])[0] != ADDRESS_FIRST_SYMBOL or len(str(block_json['tx'][i]['outputs'][y]['address'])) != ADDRESS_LENGTH):
+                    print('Tx №' + i + ' output №' + y + 'Invalid address format!')
+                    return False
+                
+                #tx val check
+                if(block_json['tx'][i]['outputs'][y]['val'] < 0 or block_json['tx'][i]['outputs'][y]['val'] > TOTAL_COINS):
+                    print('Tx №' + i + ' output №' + y + '"val" is specified incorrectly!')
+                    return False
+
+                #tx lock
                 
 
                 y += 1
