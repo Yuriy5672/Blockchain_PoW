@@ -17,7 +17,7 @@
         {
             "address": "", //168 bit  address == pubKey -> sha3_256 - 13 byte + 1 (const)
             "val": "", //float 32 bit
-            "lock": "" //256 bit hash
+            "lock": "" //512 bit hash
         },
         {
             ...

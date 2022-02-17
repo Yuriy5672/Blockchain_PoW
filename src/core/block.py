@@ -23,5 +23,5 @@ def hash_sha3(data):
     return data
 
 
-create_block()
-print(hash_sha3('Hello World!'))
+#create_block()
+#print(hash_sha3('Hello World!'))

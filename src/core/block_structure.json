@@ -1,10 +1,9 @@
 {
     "version": "string",
     "prevBlockHash": "string",
-    "merkleRoot": "string",
-    "timestamp": "string",
-    "target": "string",
-    "nonce": "string",
+    "timestamp": "float",
+    "difficulty": "string",
+    "nonce": "int",
     "blockHash": "string",
     "tx": [
         
